@@ -1,0 +1,15 @@
+add animations to original player
+limit ledge climbing to left right when ledge is finished
+go left right to normal of ledge, decend with shift
+run with shift
+
+enemies and pathfinding
+alert system for enemies (all in a radius send raycast and if notthin in the way => alerted)
+	alerted => change all enemies to searching or in a radius
+enemie attacks
+animations for enemies
+
+return to sealth if not in sight by no enemies
+stab enemies from behind
+
+sword pickup

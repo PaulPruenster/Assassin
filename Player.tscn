@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://s7jydd3xgl8a"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_7mga8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jibul"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xc5kc"]
+
+[node name="Player" type="CharacterBody3D"]
+floor_snap_length = 0.2
+script = ExtResource("1_7mga8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_jibul")
+
+[node name="SpringArmPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49472, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
+spring_length = 7.0
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D"]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_xc5kc")
+
+[node name="Raycasts" type="Node3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="LedgeRayHorizontal" type="RayCast3D" parent="Body/Raycasts"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0)
+target_position = Vector3(0, -0.6, 0)
+
+[node name="LedgeRayHorizontalR" type="RayCast3D" parent="Body/Raycasts"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, 2, 0)
+target_position = Vector3(0, -0.45, 0)
+
+[node name="LedgeRayHorizontalL" type="RayCast3D" parent="Body/Raycasts"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.5, 2, 0)
+target_position = Vector3(0, -0.45, 0)
+
+[node name="LedgeRay" type="RayCast3D" parent="Body/Raycasts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, -0.6)
+target_position = Vector3(0, -0.25, 0)

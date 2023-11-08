@@ -1,0 +1,76 @@
+[gd_scene load_steps=13 format=3 uid="uid://sh0pfn8u1wkg"]
+
+[ext_resource type="PackedScene" uid="uid://dqx8o4yu7cvaq" path="res://models/map.blend" id="1_n4rmu"]
+[ext_resource type="PackedScene" uid="uid://07juy0uoqmry" path="res://john.tscn" id="3_7aey4"]
+[ext_resource type="Script" path="res://addons/linear_stairs/nodes/csg_linear_stairs.gd" id="3_ies3r"]
+[ext_resource type="PackedScene" uid="uid://btuvbgpvmlp1m" path="res://water.tscn" id="4_i1r4i"]
+[ext_resource type="PackedScene" uid="uid://blqeg8xsdi6ra" path="res://grass.tscn" id="5_y1c3e"]
+[ext_resource type="PackedScene" uid="uid://n8thb3tt00fp" path="res://ditto.tscn" id="6_r628j"]
+[ext_resource type="PackedScene" uid="uid://v53d71y7rotq" path="res://fps_meter.tscn" id="7_ogdgm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ulnd0"]
+sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
+sky_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
+ground_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
+
+[sub_resource type="Sky" id="Sky_1uvas"]
+sky_material = SubResource("ProceduralSkyMaterial_ulnd0")
+
+[sub_resource type="Environment" id="Environment_m8hrf"]
+background_mode = 2
+sky = SubResource("Sky_1uvas")
+tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 4.93
+glow_blend_mode = 0
+fog_density = 0.0298
+volumetric_fog_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0jwgg"]
+albedo_color = Color(0.301961, 0.301961, 0.270588, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t157g"]
+albedo_color = Color(0.376471, 0.360784, 0.352941, 1)
+
+[node name="World" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_m8hrf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 18.2286, -6.83108)
+light_color = Color(0.996078, 1, 0.870588, 1)
+shadow_enabled = true
+
+[node name="gound" parent="." instance=ExtResource("1_n4rmu")]
+
+[node name="CSGLinearStairs" type="CSGCombiner3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.4157, -0.785403, -7.07983)
+use_collision = true
+script = ExtResource("3_ies3r")
+stairs_amount = 52
+stair_height = 0.145
+material = SubResource("StandardMaterial3D_0jwgg")
+
+[node name="CSGLinearStairs2" type="CSGCombiner3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20.4554, -0.770058, -16.3721)
+use_collision = true
+script = ExtResource("3_ies3r")
+stairs_amount = 32
+stairs_width = 1.5
+stair_height = 0.145
+material = SubResource("StandardMaterial3D_t157g")
+
+[node name="john" parent="." instance=ExtResource("3_7aey4")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -26.086)
+
+[node name="water" parent="." instance=ExtResource("4_i1r4i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5699, 3.65883, -41.6425)
+
+[node name="grass" parent="." instance=ExtResource("5_y1c3e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4928, -0.713932, -29.3985)
+
+[node name="ditto" parent="." instance=ExtResource("6_r628j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3312, 0.664093, -29.2188)
+
+[node name="FPSMeter" parent="." instance=ExtResource("7_ogdgm")]
