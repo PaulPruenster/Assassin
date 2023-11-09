@@ -25,4 +25,12 @@ shape = SubResource("CapsuleShape3D_sbxok")
 avoidance_enabled = true
 radius = 1.0
 
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.62632, 0)
+billboard = 2
+modulate = Color(0.929412, 0.87451, 0.615686, 1)
+outline_modulate = Color(0.247059, 0.247059, 0.247059, 1)
+font_size = 200
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
