@@ -9,6 +9,8 @@ extends CharacterBody3D
 @onready var ledge_ray_horizontal_r = $Body/Raycasts/LedgeRayHorizontalR
 @onready var ledge_ray_horizontal_l = $Body/Raycasts/LedgeRayHorizontalL
 
+@onready var anim_tree = $AnimationTree
+
 const SPEED = 7.0
 const HANGING_SPEED = 1.5
 
@@ -25,9 +27,6 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
-	if Input.is_action_just_pressed("quit"):
-		get_tree().quit()
-		
 	if event is InputEventMouseMotion:
 		spring_arm_pivot.rotate_y(-event.relative.x * 0.005)
 		spring_arm.rotate_x(-event.relative.y * 0.005)
@@ -77,12 +76,14 @@ func _physics_process(delta):
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
 	if direction:
-		velocity.x = direction.x * get_speed()
-		velocity.z = direction.z * get_speed()
+		velocity.x = lerp(velocity.x, direction.x * get_speed(), .3)
+		velocity.z = lerp(velocity.z, direction.z * get_speed(), .3)
 		if not hanging:
-			body.rotation.y = lerp_angle(body.rotation.y, atan2(-velocity.x, -velocity.z), .15)
+			body.rotation.y = lerp_angle(body.rotation.y, atan2(-velocity.x, -velocity.z), .3)
 	else:
-		velocity.x = move_toward(velocity.x, 0, get_speed())
-		velocity.z = move_toward(velocity.z, 0, get_speed())
+		velocity.x = lerp(velocity.x, 0.0, .3)
+		velocity.z = lerp(velocity.z, 0.0, .3)
+
+	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / get_speed())
 
 	move_and_slide()

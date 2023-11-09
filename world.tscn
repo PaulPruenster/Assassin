@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://dqx8o4yu7cvaq" path="res://models/map.blend" id="1_n4rmu"]
 [ext_resource type="Script" path="res://world.gd" id="1_uthcr"]
-[ext_resource type="PackedScene" uid="uid://07juy0uoqmry" path="res://john.tscn" id="3_7aey4"]
 [ext_resource type="Script" path="res://addons/linear_stairs/nodes/csg_linear_stairs.gd" id="3_ies3r"]
 [ext_resource type="PackedScene" uid="uid://btuvbgpvmlp1m" path="res://water.tscn" id="4_i1r4i"]
 [ext_resource type="PackedScene" uid="uid://blqeg8xsdi6ra" path="res://grass.tscn" id="5_y1c3e"]
+[ext_resource type="PackedScene" uid="uid://s7jydd3xgl8a" path="res://Player.tscn" id="6_nwioi"]
 [ext_resource type="PackedScene" uid="uid://n8thb3tt00fp" path="res://ditto.tscn" id="6_r628j"]
 [ext_resource type="PackedScene" uid="uid://v53d71y7rotq" path="res://fps_meter.tscn" id="7_ogdgm"]
 [ext_resource type="PackedScene" uid="uid://cxcupvlc7ldhn" path="res://pause_menu.tscn" id="9_647bo"]
@@ -76,11 +76,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4928, -0.713932, -29.3985
 [node name="Pausable" type="Node" parent="."]
 process_mode = 1
 
+[node name="Player" parent="Pausable" instance=ExtResource("6_nwioi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.937584, -0.730896, -26.1019)
+
 [node name="Enemy" parent="Pausable" instance=ExtResource("10_47cs8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6423, -0.730896, -33.9686)
-
-[node name="john" parent="Pausable" instance=ExtResource("3_7aey4")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -26.086)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_m8hrf")

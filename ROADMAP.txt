@@ -1,9 +1,11 @@
-add animations to original player
 limit ledge climbing to left right when ledge is finished
-go left right to normal of ledge, decend with shift
+decend with shift
 run with shift
+crouch with ctrl
 
-enemies and pathfinding
+fix water shader
+make water reflective
+
 alert system for enemies (all in a radius send raycast and if notthin in the way => alerted)
 	alerted => change all enemies to searching or in a radius
 enemie attacks
