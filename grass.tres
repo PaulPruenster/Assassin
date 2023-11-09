@@ -216,6 +216,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-136, 69)
 modes/cull = 2
 modes/diffuse = 3
 nodes/vertex/2/node = SubResource("VisualShaderNodeVectorOp_86f6x")
@@ -252,7 +253,7 @@ nodes/vertex/17/node = SubResource("VisualShaderNodeVectorCompose_ddc4t")
 nodes/vertex/17/position = Vector2(-1340, -360)
 nodes/vertex/18/node = SubResource("VisualShaderNodeFloatParameter_asevw")
 nodes/vertex/18/position = Vector2(-1140, -460)
-nodes/vertex/connections = PackedInt32Array(2, 0, 0, 0, 3, 0, 2, 0, 4, 0, 2, 1, 5, 0, 4, 1, 6, 0, 4, 0, 7, 0, 6, 1, 8, 1, 7, 0, 9, 0, 8, 0, 10, 0, 6, 0, 11, 0, 10, 2, 12, 0, 10, 0, 13, 0, 14, 1, 14, 0, 12, 2, 15, 0, 16, 0, 16, 2, 17, 1, 16, 0, 17, 0, 17, 0, 14, 0, 18, 0, 12, 1)
+nodes/vertex/connections = PackedInt32Array(3, 0, 2, 0, 4, 0, 2, 1, 5, 0, 4, 1, 6, 0, 4, 0, 7, 0, 6, 1, 8, 1, 7, 0, 9, 0, 8, 0, 10, 0, 6, 0, 11, 0, 10, 2, 12, 0, 10, 0, 13, 0, 14, 1, 14, 0, 12, 2, 15, 0, 16, 0, 16, 2, 17, 1, 16, 0, 17, 0, 17, 0, 14, 0, 18, 0, 12, 1, 2, 0, 0, 0)
 nodes/fragment/2/node = SubResource("VisualShaderNodeVectorCompose_rolsg")
 nodes/fragment/2/position = Vector2(120, 320)
 nodes/fragment/3/node = SubResource("VisualShaderNodeFloatConstant_s1s0h")
