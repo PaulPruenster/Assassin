@@ -1,13 +1,12 @@
 limit ledge climbing to left right when ledge is finished
 decend with shift
 
+climbing animations
+
 run with shift
 crouch with ctrl
 
 enemie attacks
-animations for enemies
-
-return to sealth if not in sight by no enemies
 
 sword pickup
 

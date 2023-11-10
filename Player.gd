@@ -9,7 +9,7 @@ enum STATE {
 	CROUCHING
 }
 
-var state = [] # Array to have more states zb 
+var state = STATE.IDLE
 
 @onready var spring_arm_pivot = $SpringArmPivot
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
