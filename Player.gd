@@ -1,5 +1,16 @@
 extends CharacterBody3D
 
+enum STATE {
+	IDLE,
+	WALKING,
+	RUNNING,
+	HANGING,
+	JUMPING,
+	CROUCHING
+}
+
+var state = [] # Array to have more states zb 
+
 @onready var spring_arm_pivot = $SpringArmPivot
 @onready var spring_arm = $SpringArmPivot/SpringArm3D
 
@@ -8,6 +19,7 @@ extends CharacterBody3D
 @onready var ledge_ray_horizontal = $Body/Raycasts/LedgeRayHorizontal
 @onready var ledge_ray_horizontal_r = $Body/Raycasts/LedgeRayHorizontalR
 @onready var ledge_ray_horizontal_l = $Body/Raycasts/LedgeRayHorizontalL
+@onready var stab_ray = $Body/Raycasts/Stab
 
 @onready var anim_tree = $AnimationTree
 
@@ -45,6 +57,16 @@ func _physics_process(delta):
 		can_jump = false
 	else: 
 		can_jump = true
+		
+	if Input.is_action_just_pressed("sneak"):
+		stab_ray.force_raycast_update()
+		var collider = stab_ray.get_collider()
+		if collider and collider.is_in_group("enemies"):
+			var enemy = collider as CharacterBody3D
+			var rotation_difference = abs(enemy.rotation.y - rotation.y)
+
+			print(rotation_difference)
+			enemy.set_dead()
 
 	#Ledge hanging
 	hanging = false

@@ -10,5 +10,5 @@ func _unhandled_input(_event):
 		emit_signal("toggle_game_pause", get_tree().paused)
 		
 		
-func _physics_process(delta):
+func _physics_process(_delta):
 	get_tree().call_group("enemies", "update_target_location", player.global_transform.origin)

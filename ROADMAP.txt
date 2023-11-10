@@ -1,17 +1,14 @@
 limit ledge climbing to left right when ledge is finished
 decend with shift
+
 run with shift
 crouch with ctrl
 
-fix water shader
-make water reflective
-
-alert system for enemies (all in a radius send raycast and if notthin in the way => alerted)
-	alerted => change all enemies to searching or in a radius
 enemie attacks
 animations for enemies
 
 return to sealth if not in sight by no enemies
-stab enemies from behind
 
 sword pickup
+
+make water reflective
