@@ -15,6 +15,7 @@ enum STATE {
 
 @onready var state = STATE.IDLE
 
+var sees_player = false
 const SPEED = 5.0
 
 func _unhandled_input(event):
@@ -26,10 +27,14 @@ func can_see_player(target):
 	raycast.force_raycast_update()
 	var collider = raycast.get_collider()
 	
-	return collider and collider.is_in_group("player")
+	if not collider or not collider.is_in_group("player"):
+		return false
+	
+	var player = collider as CharacterBody3D
+	return not player.hidden
 
 func set_alert():
-	if state != STATE.DEAD:
+	if state != STATE.DEAD and sees_player:
 		state = STATE.ALERT
 		
 func set_dead():
@@ -38,7 +43,7 @@ func set_dead():
 	$CollisionShape3D.disabled = true
 	$DespawnTimer.start()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if state == STATE.DEAD:
 		label.font_size = 50
 		label.text = 'RIP'
@@ -60,7 +65,7 @@ func _physics_process(delta):
 	navagent.set_velocity(new_vel)
 
 func update_target_location(target):	
-	var sees_player = can_see_player(target)
+	sees_player = can_see_player(target)
 	
 	if state == STATE.ALERT:
 		if sees_player:

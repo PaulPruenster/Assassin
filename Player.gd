@@ -25,12 +25,14 @@ var state = STATE.IDLE
 
 const SPEED = 7.0
 const HANGING_SPEED = 1.5
+const CROUCH_SPEED = 3.0
 
 const JUMP_VELOCITY = 5.5
 const HANG_JUMP_VELOCITY = 6.5
 
 var can_jump = true
 var hanging = false
+var hidden = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -45,10 +47,17 @@ func _unhandled_input(event):
 		spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/2, PI/4)
 		
 func get_speed():
-#	if hanging or not is_on_floor():
-#			return HANGING_SPEED
-#	return SPEED
-	return HANGING_SPEED if hanging else SPEED
+	if hanging: return HANGING_SPEED
+	if hidden: return CROUCH_SPEED
+	return SPEED
+	
+func is_hidden():
+	if Input.is_action_pressed("sneak"):
+		for index in range(get_slide_collision_count()):
+				var collision = get_slide_collision(index)
+				if collision.get_collider().is_in_group("hidable"):
+					return true
+	return false
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -57,16 +66,23 @@ func _physics_process(delta):
 		can_jump = false
 	else: 
 		can_jump = true
+	
+	# update hidden state for example for grass if enemies are alerted
+	hidden = is_hidden()
+	
+	# sneaking
+	$Label3D.text = ""
+	if Input.is_action_pressed("sneak"):
 		
-	if Input.is_action_just_pressed("sneak"):
+		# stabing an enemy
 		stab_ray.force_raycast_update()
 		var collider = stab_ray.get_collider()
 		if collider and collider.is_in_group("enemies"):
 			var enemy = collider as CharacterBody3D
-			var rotation_difference = abs(enemy.rotation.y - rotation.y)
-
-			print(rotation_difference)
-			enemy.set_dead()
+			
+			$Label3D.text = "(Left mouse) to stab"
+			if Input.is_action_just_pressed("left_click"):
+				enemy.set_dead()
 
 	#Ledge hanging
 	hanging = false
