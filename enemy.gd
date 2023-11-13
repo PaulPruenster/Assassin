@@ -41,6 +41,7 @@ func set_dead():
 	state = STATE.DEAD
 	get_tree().call_group("enemies", "set_alert")
 	$CollisionShape3D.disabled = true
+	$AnimationTree.set("parameters/conditions/die", true)
 	$DespawnTimer.start()
 
 func _physics_process(_delta):
@@ -81,7 +82,7 @@ func update_target_location(target):
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	velocity = velocity.move_toward(safe_velocity, .25)
-	$AnimationTree.set("parameters/BlendSpace1D/blend_position", velocity.length() / SPEED)
+	$AnimationTree.set("parameters/Move/blend_position", velocity.length() / SPEED)
 	move_and_slide()
 
 
