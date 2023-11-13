@@ -22,6 +22,7 @@ var state = STATE.IDLE
 @onready var stab_ray = $Body/Raycasts/Stab
 
 @onready var anim_tree = $AnimationTree
+@onready var state_maschine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 
 const SPEED = 7.0
 const HANGING_SPEED = 1.5
@@ -64,8 +65,10 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		can_jump = false
-	else: 
-		can_jump = true
+	else:
+		if not can_jump: # player just landed
+			state_maschine.travel("move")
+			can_jump = true
 	
 	# update hidden state for example for grass if enemies are alerted
 	hidden = is_hidden()
@@ -94,6 +97,7 @@ func _physics_process(delta):
 				hanging = true
 				can_jump = true
 				velocity.y = 0
+				state_maschine.travel("hang")
 				
 				# Staighten the player to the edge
 				ledge_ray_horizontal_l.force_raycast_update()
@@ -103,11 +107,14 @@ func _physics_process(delta):
 					body.rotation.y += 0.1
 				if ledge_ray_horizontal_r.is_colliding() and not ledge_ray_horizontal_l.is_colliding():
 					body.rotation.y -= 0.1
+					
+	if not hanging and not is_on_floor():
+		state_maschine.travel("falling")
 				
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = HANG_JUMP_VELOCITY if hanging else JUMP_VELOCITY
-	
+		state_maschine.travel("jump_start")
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
@@ -122,6 +129,6 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x, 0.0, .3)
 		velocity.z = lerp(velocity.z, 0.0, .3)
 
-	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / get_speed())
-
+	anim_tree.set("parameters/move/blend_position", velocity.length() / get_speed())
+	anim_tree.set("parameters/hang/BlendSpace1D/blend_position", input_dir.x)
 	move_and_slide()
