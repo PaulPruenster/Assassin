@@ -24,8 +24,9 @@ var state = STATE.IDLE
 @onready var anim_tree = $AnimationTree
 @onready var state_maschine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 
-const SPEED = 7.0
+const SPEED = 5.0
 const HANGING_SPEED = 1.5
+const RUNNING_SPEED = 7.0
 const CROUCH_SPEED = 3.0
 
 const JUMP_VELOCITY = 5.5
@@ -33,6 +34,8 @@ const HANG_JUMP_VELOCITY = 6.5
 
 var can_jump = true
 var hanging = false
+var sneaking = false
+var running = false
 var hidden = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -49,6 +52,7 @@ func _unhandled_input(event):
 		
 func get_speed():
 	if hanging: return HANGING_SPEED
+	if running: return RUNNING_SPEED
 	if hidden: return CROUCH_SPEED
 	return SPEED
 	
@@ -75,8 +79,8 @@ func _physics_process(delta):
 	
 	# sneaking
 	$Label3D.text = ""
-	if Input.is_action_pressed("sneak"):
-		
+	sneaking = Input.is_action_pressed("sneak")
+	if sneaking:
 		# stabing an enemy
 		stab_ray.force_raycast_update()
 		var collider = stab_ray.get_collider()
@@ -86,6 +90,9 @@ func _physics_process(delta):
 			$Label3D.text = "(Left mouse) to stab"
 			if Input.is_action_just_pressed("left_click"):
 				enemy.set_dead()
+				
+	# running
+	running = Input.is_action_pressed("run")
 
 	#Ledge hanging
 	hanging = false
@@ -129,7 +136,9 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x, 0.0, .3)
 		velocity.z = lerp(velocity.z, 0.0, .3)
 
-	anim_tree.set("parameters/move/blend_position", velocity.length() / get_speed())
+	var move_mode = 1 if sneaking else 0
+	var move_speed = velocity.length() / (get_speed()/2) if running else velocity.length() / get_speed()
+	anim_tree.set("parameters/move/blend_position", Vector2(move_speed, move_mode))
 	# TODO fix left right animations (too high)
 	#anim_tree.set("parameters/hang/BlendSpace1D/blend_position", input_dir.x)
 	move_and_slide()
