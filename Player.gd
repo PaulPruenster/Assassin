@@ -130,5 +130,6 @@ func _physics_process(delta):
 		velocity.z = lerp(velocity.z, 0.0, .3)
 
 	anim_tree.set("parameters/move/blend_position", velocity.length() / get_speed())
-	anim_tree.set("parameters/hang/BlendSpace1D/blend_position", input_dir.x)
+	# TODO fix left right animations (too high)
+	#anim_tree.set("parameters/hang/BlendSpace1D/blend_position", input_dir.x)
 	move_and_slide()

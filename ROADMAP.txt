@@ -1,8 +1,6 @@
 limit ledge climbing to left right when ledge is finished
 decend with shift
 
-climbing animations
-
 run with shift
 crouch with ctrl
 
