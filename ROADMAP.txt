@@ -1,9 +1,6 @@
 limit ledge climbing to left right when ledge is finished
 decend with shift
 
-run with shift
-crouch with ctrl
-
 enemie attacks
 
 sword pickup
