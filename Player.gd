@@ -30,7 +30,7 @@ const RUNNING_SPEED = 7.0
 const CROUCH_SPEED = 3.0
 
 const JUMP_VELOCITY = 5.5
-const HANG_JUMP_VELOCITY = 6.5
+const HANG_JUMP_VELOCITY = 7.5
 
 var can_jump = true
 var hanging = false
